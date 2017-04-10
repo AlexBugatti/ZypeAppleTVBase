@@ -62,9 +62,9 @@ open class ZypeAppleTVBase: NSObject {
         dataManager?.loadConsumer(completion)
     }
     
-    open func createConsumer(_ consumer: ConsumerModel, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void)
+    open func createConsumer(_ consumer: ConsumerModel, completion:@escaping (_ success: Bool, _ error: NSError?, _ message: String) -> Void)
     {
-        dataManager == nil ? completion(false, NSError(domain: kErrorDomaine, code: kErrorSDKNotInitialized, userInfo: nil)) :
+        dataManager == nil ? completion(false, NSError(domain: kErrorDomaine, code: kErrorSDKNotInitialized, userInfo: nil), "") :
             dataManager?.createConsumer(consumer, completion: completion)
     }
     

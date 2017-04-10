@@ -161,11 +161,12 @@ class ZypeDataManager : NSObject {
         }, update: serviceController.refreshAccessTokenWithCompletionHandler)
     }
 
-    func createConsumer(_ consumer: ConsumerModel, completion:@escaping (_ success: Bool, _ error: NSError?) -> Void)
+    func createConsumer(_ consumer: ConsumerModel, completion:@escaping (_ success: Bool, _ error: NSError?, _ message: String) -> Void)
     {
         self.serviceController.createConsumer(consumer) { (jsonDic, err) -> Void in
             var success = false
             var error = err
+            var message = ""
             if error == nil && jsonDic != nil
             {
                 error = self.isServiceError(jsonDic!)
@@ -173,9 +174,10 @@ class ZypeDataManager : NSObject {
                 {
                     success = true
                 }
+                message = jsonDic!["message"] as! String
             }
             DispatchQueue.main.sync(execute: {
-                completion(_: success, err)
+                completion(_: success, err, message)
             })
         }
     }
